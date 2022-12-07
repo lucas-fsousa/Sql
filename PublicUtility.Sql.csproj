@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Title>PublicUtility.Sql</Title>
+    <Company>Lucas F Sousa</Company>
+    <Description>Class library with SQL manipulation facilitator in multiple database types</Description>
+    <PackageProjectUrl>https://github.com/lucas-fsousa/Sql</PackageProjectUrl>
+    <PackageReadmeFile>README.MD</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/lucas-fsousa/Sql</RepositoryUrl>
+    <PackAsTool>False</PackAsTool>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>DOTNET;.NET6; .NET; MYSQL; SQLSERVER; MONGODB; SQL; POSTGRESQL; DATABASE; DATA; ADONET; HELPER; ASPNET;</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Lucas F Sousa</Authors>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Copyright>Lucas Sousa. All rights reserved.</Copyright>
+    <PackageId>PublicUtility.$(AssemblyName)</PackageId>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
+    <PackageReference Include="MySqlConnector" Version="2.2.2" />
+  </ItemGroup>
+
+</Project>
