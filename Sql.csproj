@@ -25,6 +25,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
     <PackageReference Include="MySqlConnector" Version="2.2.2" />
+    <PackageReference Include="Npgsql" Version="7.0.1" />
     <PackageReference Include="PublicUtility.Extension" Version="1.0.4" />
   </ItemGroup>
 
