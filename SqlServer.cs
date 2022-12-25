@@ -4,7 +4,7 @@ using System.Collections;
 using System.Data;
 
 namespace PublicUtility.Sql.SqlServer {
-  public class DB: IDisposable {
+  public partial class DB: IDisposable {
     private readonly SqlConnection con = null;
     private SqlTransaction tran = null;
     private SqlCommand cmd = null;

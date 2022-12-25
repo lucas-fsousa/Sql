@@ -4,7 +4,7 @@ using System.Collections;
 using System.Data;
 
 namespace PublicUtility.Sql.Postgresql {
-  public class DB: IDisposable {
+  public partial class DB: IDisposable {
     private readonly NpgsqlConnection con = null;
     private NpgsqlTransaction tran = null;
     private NpgsqlCommand cmd = null;

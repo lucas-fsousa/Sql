@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <Title>PublicUtility.Sql</Title>
@@ -13,20 +13,22 @@
     <PackAsTool>False</PackAsTool>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>DOTNET;.NET6; .NET; MYSQL; SQLSERVER; MONGODB; SQL; POSTGRESQL; DATABASE; DATA; ADONET; HELPER; ASPNET;</PackageTags>
+    <PackageTags>DOTNET;.NET7; .NET; MYSQL; SQLSERVER; SQL; POSTGRESQL; DATABASE; DATA; ADONET; HELPER; ASPNET;</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Lucas F Sousa</Authors>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Lucas Sousa. All rights reserved.</Copyright>
     <PackageId>PublicUtility.$(AssemblyName)</PackageId>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
+    <PackageReleaseNotes>Inclusion of the Postegresql module, inclusion of async methods.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
-    <PackageReference Include="MySqlConnector" Version="2.2.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
+    <PackageReference Include="MySqlConnector" Version="2.2.4" />
     <PackageReference Include="Npgsql" Version="7.0.1" />
-    <PackageReference Include="PublicUtility.Extension" Version="1.0.4" />
+    <PackageReference Include="PublicUtility.Extension" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
