@@ -6,7 +6,6 @@ using System.Data;
 namespace PublicUtility.Sql.SqlServer {
   public partial class DB: IDisposable {
     private readonly SqlConnection con = null;
-    private SqlTransaction tran = null;
     private SqlCommand cmd = null;
 
     #region PRIVATE METHODS
@@ -22,10 +21,9 @@ namespace PublicUtility.Sql.SqlServer {
     }
 
     private SqlConnection Open() {
-      if(con.State == ConnectionState.Closed) {
+      if(con.State == ConnectionState.Closed)
         con.Open();
-        tran = con.BeginTransaction();
-      }
+      
       return con;
     }
 
@@ -46,7 +44,7 @@ namespace PublicUtility.Sql.SqlServer {
       cmd = command;
       try {
         cmd.Connection = Open();
-        cmd.Transaction = tran;
+        cmd.Transaction = con.BeginTransaction();
         cmd.ExecuteNonQuery();
         Commit();
         return string.Format($" [OK] - {DateTime.UtcNow}");
@@ -65,14 +63,11 @@ namespace PublicUtility.Sql.SqlServer {
       try {
         var adapter = new SqlDataAdapter();
         cmd.Connection = Open();
-        cmd.Transaction = tran;
 
         adapter.SelectCommand = cmd;
         adapter.Fill(table);
-        Commit();
       } catch {
         table = null;
-        RollBack();
       }
       return table;
     }

@@ -19,10 +19,9 @@ namespace PublicUtility.Sql.SqlServer {
     }
 
     private async ValueTask<SqlConnection> OpenAsync(CancellationToken cancellationToken = default) {
-      if(con.State == ConnectionState.Closed) {
+      if(con.State == ConnectionState.Closed)
         await con.OpenAsync(cancellationToken);
-        tran = await con.BeginTransactionAsync(cancellationToken) as SqlTransaction;
-      }
+      
       return con;
     }
 
@@ -40,9 +39,10 @@ namespace PublicUtility.Sql.SqlServer {
         cmd = command;
         try {
           cmd.Connection = await OpenAsync(cancellationToken);
-          cmd.Transaction = tran;
+          cmd.Transaction = await con.BeginTransactionAsync(cancellationToken) as SqlTransaction;
           await cmd.ExecuteNonQueryAsync(cancellationToken);
-          await OpenAsync(cancellationToken);
+          await CommitAsync(cancellationToken);
+
           return string.Format($" [OK] - {DateTime.UtcNow}");
         } catch(Exception ex) {
           await RollBackAsync(cancellationToken);
@@ -62,14 +62,11 @@ namespace PublicUtility.Sql.SqlServer {
         try {
           var adapter = new SqlDataAdapter();
           cmd.Connection = await OpenAsync(cancellationToken);
-          cmd.Transaction = tran;
 
           adapter.SelectCommand = cmd;
           adapter.Fill(table);
-          await CommitAsync(cancellationToken);
         } catch {
           table = null;
-          await RollBackAsync(cancellationToken);
         }
         return table;
       }, cancellationToken);

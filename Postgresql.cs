@@ -6,7 +6,6 @@ using System.Data;
 namespace PublicUtility.Sql.Postgresql {
   public partial class DB: IDisposable {
     private readonly NpgsqlConnection con = null;
-    private NpgsqlTransaction tran = null;
     private NpgsqlCommand cmd = null;
 
     #region PRIVATE METHODS
@@ -22,10 +21,9 @@ namespace PublicUtility.Sql.Postgresql {
     }
 
     private NpgsqlConnection Open() {
-      if(con.State == ConnectionState.Closed) {
+      if(con.State == ConnectionState.Closed)
         con.Open();
-        tran = con.BeginTransaction();
-      }
+      
       return con;
     }
 
@@ -46,7 +44,7 @@ namespace PublicUtility.Sql.Postgresql {
       cmd = command;
       try {
         cmd.Connection = Open();
-        cmd.Transaction = tran;
+        cmd.Transaction = con.BeginTransaction();
         cmd.ExecuteNonQuery();
         Commit();
         return string.Format($" [OK] - {DateTime.UtcNow}");
@@ -65,14 +63,11 @@ namespace PublicUtility.Sql.Postgresql {
       try {
         var adapter = new NpgsqlDataAdapter();
         cmd.Connection = Open();
-        cmd.Transaction = tran;
 
         adapter.SelectCommand = cmd;
         adapter.Fill(table);
-        Commit();
       } catch {
         table = null;
-        RollBack();
       }
       return table;
     }

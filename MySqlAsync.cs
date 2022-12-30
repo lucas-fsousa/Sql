@@ -19,10 +19,9 @@ namespace PublicUtility.Sql.MySql {
     }
 
     private async ValueTask<MySqlConnection> OpenAsync(CancellationToken cancellationToken = default) {
-      if(con.State == ConnectionState.Closed) {
+      if(con.State == ConnectionState.Closed)
         await con.OpenAsync(cancellationToken);
-        tran = await con.BeginTransactionAsync(cancellationToken);
-      }
+
       return con;
     }
 
@@ -40,7 +39,7 @@ namespace PublicUtility.Sql.MySql {
         cmd = command;
         try {
           cmd.Connection = await OpenAsync(cancellationToken);
-          cmd.Transaction = tran;
+          cmd.Transaction = await con.BeginTransactionAsync(cancellationToken);
           await cmd.ExecuteNonQueryAsync(cancellationToken);
           await CommitAsync(cancellationToken);
           return string.Format($" [OK] - {DateTime.UtcNow}");
@@ -62,14 +61,11 @@ namespace PublicUtility.Sql.MySql {
         try {
           var adapter = new MySqlDataAdapter();
           cmd.Connection = await OpenAsync(cancellationToken);
-          cmd.Transaction = tran;
 
           adapter.SelectCommand = cmd;
           adapter.Fill(table);
-          await CommitAsync(cancellationToken);
         } catch {
           table = null;
-          await RollBackAsync(cancellationToken);
         }
         return table;
       }, cancellationToken); 

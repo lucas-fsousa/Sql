@@ -6,7 +6,6 @@ using System.Data;
 namespace PublicUtility.Sql.MySql {
   public partial class DB: IDisposable {
     private readonly MySqlConnection con = null;
-    private MySqlTransaction tran = null;
     private MySqlCommand cmd = null;
 
     #region PRIVATE METHODS
@@ -22,10 +21,9 @@ namespace PublicUtility.Sql.MySql {
     }
 
     private MySqlConnection Open() {
-      if(con.State == ConnectionState.Closed) {
+      if(con.State == ConnectionState.Closed)
         con.Open();
-        tran = con.BeginTransaction();
-      }
+        
       return con;
     }
 
@@ -47,7 +45,7 @@ namespace PublicUtility.Sql.MySql {
       cmd = command;
       try {
         cmd.Connection = Open();
-        cmd.Transaction = tran;
+        cmd.Transaction = con.BeginTransaction();
         cmd.ExecuteNonQuery();
         Commit();
         return string.Format($" [OK] - {DateTime.UtcNow}");
@@ -66,14 +64,11 @@ namespace PublicUtility.Sql.MySql {
       try {
         var adapter = new MySqlDataAdapter();
         cmd.Connection = Open();
-        cmd.Transaction = tran;
 
         adapter.SelectCommand = cmd;
         adapter.Fill(table);
-        Commit();
       } catch {
         table = null;
-        RollBack();
       }
       return table;
     }
