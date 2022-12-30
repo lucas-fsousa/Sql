@@ -29,7 +29,7 @@
     <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
     <PackageReference Include="MySqlConnector" Version="2.2.4" />
     <PackageReference Include="Npgsql" Version="7.0.1" />
-    <PackageReference Include="PublicUtility.Extension" Version="2.0.0" />
+    <PackageReference Include="PublicUtility.Extension" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
